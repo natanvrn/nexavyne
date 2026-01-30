@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#webpack-exodus",
-    "puppeteer": "^21.0.0"
-  },
+    "puppeteer": "21.11.0"
+  }
   "engines": {
     "node": "20.x"
   }
