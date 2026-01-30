@@ -1,0 +1,16 @@
+{
+  "name": "nexa-vyne-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#webpack-exodus",
+    "puppeteer": "21.11.0"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
+
