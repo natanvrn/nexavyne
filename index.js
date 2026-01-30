@@ -3,19 +3,18 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
+        executablePath: '/usr/bin/google-chrome-stable', // Jalur wajib di Railway
         handleSIGINT: false,
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
-            '--disable-accelerated-2d-canvas',
-            '--no-first-run',
+            '--disable-gpu',
             '--no-zygote',
-            '--single-process',
-            '--disable-gpu'
         ],
     }
 });
+
 
 // Ganti nomor ini dengan nomor bot Anda (gunakan format internasional tanpa + atau spasi)
 // Contoh: 628123456789
