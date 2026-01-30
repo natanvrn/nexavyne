@@ -1,6 +1,7 @@
 {
   "name": "nexa-vyne-bot",
   "version": "1.0.0",
+  "description": "Nexa Vyne Bot WhatsApp",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
