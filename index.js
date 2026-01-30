@@ -57,7 +57,7 @@ async function startBot() {
         if (body === "halo" || body === "p" || body === "start") {
             await sock.sendPresenceUpdate('composing', sender);
             await sock.sendMessage(sender, { text: "```NEXA VYNE v1.0.4 - BOOTING...```\n📡 `Connecting to neural_network...`" });
-            await delay(1500);
+            await delay(1100);
             
             const modernWelcome = {
                 text: `*GREETINGS, HUMAN* 🌌\n\n` +
