@@ -22,18 +22,21 @@ const client = new Client({
 const phoneNumber = "6289529328975"; 
 
 client.on('qr', async (qr) => {
-    // Karena kita ingin Pairing Code, kita panggil method getPairingCode
-    // QR tetap akan ter-generate di sistem tapi kita abaikan
-    try {
-        const pairingCode = await client.getPairingCode(phoneNumber);
-        console.log('======================================');
-        console.log('KODE PAIRING ANDA:', pairingCode);
-        console.log('======================================');
-        console.log('Cara Pakai: Buka WA > Perangkat Tautkan > Tautkan dengan nomor telepon');
-    } catch (err) {
-        console.error('Gagal mendapatkan Pairing Code:', err);
-    }
+    console.log('QR Code diterima, menyiapkan Pairing Code...');
+    
+    // Beri jeda 5 detik agar browser siap sepenuhnya
+    setTimeout(async () => {
+        try {
+            const pairingCode = await client.getPairingCode(phoneNumber);
+            console.log('======================================');
+            console.log('KODE PAIRING ANDA:', pairingCode);
+            console.log('======================================');
+        } catch (err) {
+            console.error('Gagal mendapatkan Pairing Code:', err);
+        }
+    }, 5000); 
 });
+
 
 client.on('ready', () => {
     console.log('Nexa Vyne System: Online and Ready.');
