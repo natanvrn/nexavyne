@@ -16,7 +16,7 @@ const client = new Client({
 });
 
 // GANTI DENGAN NOMOR BOT KAMU (KODE NEGARA TANPA +)
-const phoneNumber = "628xxxxxxxxxx"; 
+const phoneNumber = "6289529328975"; 
 
 client.on('qr', async (qr) => {
     console.log('Sistem mendeteksi permintaan pairing...');
