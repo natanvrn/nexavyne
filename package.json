@@ -6,11 +6,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#webpack-exodus",
-    "puppeteer": "21.11.0"
-  },
-  "engines": {
-    "node": "20.x"
+    "@adiwajshing/baileys": "latest",
+    "pino": "^8.0.0",
+    "qrcode-terminal": "^0.12.0"
   }
 }
-
