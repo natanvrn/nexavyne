@@ -46,16 +46,64 @@ async function startBot() {
 
     // 5. Logika Bot Pembuka Canggih
     sock.ev.on("messages.upsert", async ({ messages }) => {
-        const m = messages[0];
-        if (!m.message || m.key.fromMe) return;
+    const m = messages[0];
+    if (!m.message || m.key.fromMe) return;
 
-        const text = m.message.conversation || m.message.extendedTextMessage?.text || "";
-        const sender = m.key.remoteJid;
+    const sender = m.key.remoteJid;
+    const body = m.message.conversation || m.message.extendedTextMessage?.text || "";
+    const isOwner = sender === ownerNumber;
 
-        if (text.toLowerCase() === "halo" || text.toLowerCase() === "start") {
-            await sock.sendMessage(sender, { 
-                text: "*[SYSTEM INITIALIZING...]*\n\nSelamat datang di **Nexa Vyne Core**.\nKoneksi aman terjalin. Bagaimana saya bisa membantu Anda hari ini? 🔐" 
-            });
+    // --- TRIGGER PEMBUKA MODERN ---
+    if (body.toLowerCase() === "halo" || body.toLowerCase() === "p" || body.toLowerCase() === "start") {
+        
+        // 1. Status Typing
+        await sock.sendPresenceUpdate('composing', sender);
+
+        // 2. Efek Loading (Pesan Pertama)
+        await sock.sendMessage(sender, { 
+            text: "```NEXA VYNE v1.0.4 - BOOTING...```\n" +
+                  "📡 `Connecting to neural_network...`"
+        });
+
+        await delay(1500);
+
+        // 3. Status Progress (Pesan Kedua - Update Visual)
+        await sock.sendMessage(sender, { 
+            text: "💠 **Core System:** `ONLINE`\n" +
+                  "🔐 **Encryption:** `AES-256 ACTIVE`\n" +
+                  "▮▮▮▮▮▮▮▮▮▯ `90%`" 
+        });
+
+        await delay(1000);
+
+        // 4. Pesan Utama (Main UI)
+        const modernWelcome = {
+            text: `*GREETINGS, HUMAN* 🌌\n\n` +
+                  `Sistem **Nexa Vyne** telah sepenuhnya terinisialisasi. Saya siap menjadi asisten digital Anda.\n\n` +
+                  `┌──  *S Y S T E M  M E N U*\n` +
+                  `│ 📂 *.menu* - Akses Database\n` +
+                  `│ ⚡ *.speed* - Cek Latensi\n` +
+                  `│ 👤 *.owner* - Kontak Pengembang\n` +
+                  `└───────────────🪐\n\n` +
+                  `_Apa yang bisa saya optimasi hari ini?_`,
+            contextInfo: {
+                externalAdReply: {
+                    title: "Nexa Vyne: Adaptive AI",
+                    body: "Status: Connection Secured",
+                    mediaType: 1,
+                    renderLargerThumbnail: false,
+                    // Kamu bisa masukkan link gambar logo bot kamu di sini
+                    thumbnailUrl: "https://telegra.ph/file/logo-nexa-vyne.jpg", 
+                    sourceUrl: "https://github.com/your-repo"
+                }
+            }
+        };
+
+        await sock.sendMessage(sender, modernWelcome);
+        await sock.sendPresenceUpdate('paused', sender);
+    }
+});
+
         }
     });
 }
