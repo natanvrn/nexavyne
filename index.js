@@ -22,21 +22,23 @@ const client = new Client({
 const phoneNumber = "6289529328975"; 
 
 client.on('qr', async (qr) => {
-    console.log('QR Code diterima, menyiapkan Pairing Code...');
+    // Pastikan nomor HP diawali kode negara (62...) tanpa spasi atau '+'
+    const myNumber = "6289529328975"; 
     
-    // Beri jeda 5 detik agar browser siap sepenuhnya
-    setTimeout(async () => {
-        try {
-            const pairingCode = await client.getPairingCode(phoneNumber);
-            console.log('======================================');
-            console.log('KODE PAIRING ANDA:', pairingCode);
-            console.log('======================================');
-        } catch (err) {
-            console.error('Gagal mendapatkan Pairing Code:', err);
-        }
-    }, 5000); 
-});
+    console.log('Sistem sedang meminta Pairing Code untuk:', myNumber);
 
+    try {
+        // Beri sedikit jeda agar internal client siap
+        setTimeout(async () => {
+            const code = await client.getPairingCode(myNumber);
+            console.log('======================================');
+            console.log('KODE PAIRING ANDA:', code);
+            console.log('======================================');
+        }, 5000);
+    } catch (err) {
+        console.error('Gagal mendapatkan Pairing Code:', err);
+    }
+});
 
 client.on('ready', () => {
     console.log('Nexa Vyne System: Online and Ready.');
