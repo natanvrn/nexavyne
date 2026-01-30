@@ -58,7 +58,7 @@ async function startBot() {
             
             const modernWelcome = {
                 text: `*GREETINGS, HUMAN* 🌌\n\n` +
-                      `Sistem **Nexa Vyne** telah aktif. Saya siap menjadi asisten digital Anda.\n\n` +
+                      `Sistem *Nexa Vyne* telah aktif. Saya siap menjadi asisten digital Anda.\n\n` +
                       `┌──  *S Y S T E M  M E N U*\n` +
                       `│ 📂 *.menu* - Akses Database\n` +
                       `│ ⚡ *.speed* - Cek Latensi\n` +
