@@ -1,16 +1,38 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
 
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        args: ['--no-sandbox', '--disable-setuid-sandbox'], // Penting untuk Railway
+        handleSIGINT: false,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process',
+            '--disable-gpu'
+        ],
     }
 });
 
-client.on('qr', (qr) => {
-    qrcode.generate(qr, { small: true });
-    console.log('Nexa Vyne: Scan QR Code di atas untuk login.');
+// Ganti nomor ini dengan nomor bot Anda (gunakan format internasional tanpa + atau spasi)
+// Contoh: 628123456789
+const phoneNumber = "6289529328975"; 
+
+client.on('qr', async (qr) => {
+    // Karena kita ingin Pairing Code, kita panggil method getPairingCode
+    // QR tetap akan ter-generate di sistem tapi kita abaikan
+    try {
+        const pairingCode = await client.getPairingCode(phoneNumber);
+        console.log('======================================');
+        console.log('KODE PAIRING ANDA:', pairingCode);
+        console.log('======================================');
+        console.log('Cara Pakai: Buka WA > Perangkat Tautkan > Tautkan dengan nomor telepon');
+    } catch (err) {
+        console.error('Gagal mendapatkan Pairing Code:', err);
+    }
 });
 
 client.on('ready', () => {
@@ -21,13 +43,9 @@ client.on('message', async (msg) => {
     const chat = await msg.getChat();
     const userMessage = msg.body.toLowerCase();
 
-    // Trigger Kata Kunci atau Sapaan
-    if (userMessage.includes('halo') || userMessage.includes('start') || userMessage.includes('p')) {
-        
-        // Efek Mengetik
+    if (userMessage.includes('halo') || userMessage.includes('start')) {
         chat.sendStateTyping();
-
-        // Pesan 1: Initializing
+        
         setTimeout(() => {
             client.sendMessage(msg.from, 
                 `[SYSTEM INITIALIZING...]\n\n` +
@@ -37,7 +55,6 @@ client.on('message', async (msg) => {
             );
         }, 1000);
 
-        // Pesan 2: Main Menu
         setTimeout(() => {
             client.sendMessage(msg.from, 
                 `**Greetings, User.**\n\n` +
@@ -51,11 +68,10 @@ client.on('message', async (msg) => {
         }, 3000);
     }
 
-    // Response Menu 1
     if (msg.body === '1') {
-        msg.reply('📂 **[Nexa Vyne Analysis]**\n\nKami melayani pembuatan Web Solution, Mobile Apps, dan System Integration. Ingin melihat portfolio? Ketik *PORTFOLIO*.');
+        msg.reply('📂 **[Nexa Vyne Analysis]**\n\nKami melayani pembuatan Web Solution dan Mobile Apps.');
     }
 });
 
 client.initialize();
-                
+
